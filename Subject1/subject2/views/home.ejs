@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/public/stylesheets/home.css" rel="stylesheet">
+
+    <title>홈 페이지</title>
+
+    <style>
+        *{
+    font-size: 14px;
+    }
+    .login{
+    width:1040px;
+    height: 624px;
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 4px 4px 0px #00000040;
+    background-color: rgba(128, 128, 128, 0.048);
+    }
+    .login:active{
+    background-color: rgba(236, 198, 128, 0.067);
+    }
+    .imgLogo {
+    width: fit-content;
+    margin: auto;
+    display: block;
+    margin-top: 200px;
+    }
+    .textHome{
+    display: block;
+    width: fit-content;
+    margin: auto;
+    margin-top: 20px;
+    font-size: 25px;
+    font-weight: 600;
+    color: darkgray;
+    text-decoration: underline;
+    }
+    .left{
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    }
+    .right{
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    right: 0%;
+    background-color: #fff;
+    }
+    .llogo{
+    background-color: #fff;
+    padding: 40px;
+    }
+    .lbtn{
+    width:290px;
+    height: 50px;
+    margin:20px;
+    border:none;
+    background-color: #2F6C2461;
+    }
+    #logingo{
+    text-decoration: none;
+    background:none;
+    font-size: 18px;
+    color: #fff;
+    }
+    #llink{
+    background-color: #fff;
+    text-decoration: none;
+    color: #2F6C24;
+    }
+    .btn {
+    margin-left: 430px;
+    margin-top: 110px;
+    background-color: #ebd6cb;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    }
+    .btn:hover{
+    border-left: 3px solid brown;
+    }
+
+
+
+    </style>
+</head>
+<body>
+    <a href="/index">
+        <div class="login">
+            <img class="imgLogo" src="../img/logo.png">
+            <p class="textHome">주문을 하시려면 화면을 터치해주세요!</p>
+        </div>
+    </a>
+    <div class="admin">
+        <a class="btn" href="/login">관리자 전용</a>
+    </div>
+</body>
+</html> 

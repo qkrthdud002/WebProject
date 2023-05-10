@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <style>
+        * { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; height: 100%; }
+        .btn{
+          display: inline-block;
+          padding: 0 5px;
+          text-decoration: none;
+          cursor: pointer;
+          border-radius: 4px;
+          background: white;
+          border: 1px solid silver;
+          color: crimson;
+          height: 37px;
+          line-height: 37px;
+          vertical-align: top;
+          font-size: 12px;
+          margin-bottom: 10px;
+        }
+        .myBtn, .allBtn {
+          display: inline-block;
+          padding: 0 5px;
+          text-decoration: none;
+          cursor: pointer;
+          border-radius: 4px;
+          background: lightcoral;
+          border: 1px solid crimson;
+          color: white;
+          height: 37px;
+          line-height: 37px;
+          margin-top: 10px;
+        }
+        input[type='text'], input[type='email'], input[type='password'], textarea {
+          border-radius: 4px;
+          height: 37px;
+          padding: 10px;
+          border: 1px solid silver;
+        }
+        .container { width: 100%; height: 100%; }
+        @media screen and (min-width: 800px) {
+          .container { width: 800px; margin: 0 auto; }
+        }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { width: 25%; display: inline-block; }
+        .input-group input { width: 70%; }
+        .half { float: left; width: 50%; margin: 10px 0; }
+        #join { float: right; }
+        .profile-wrap {
+          width: 100%;
+          display: inline-block;
+          vertical-align: top;
+          margin: 10px 0;
+        }
+        @media screen and (min-width: 800px) {
+          .profile-wrap { width: 290px; margin-bottom: 0; }
+        }
+        .profile {
+          text-align: left;
+          padding: 10px;
+          margin-right: 10px;
+          border-radius: 4px;
+          border: 1px solid silver;
+          background: lightcoral;
+        }
+        .user-name { font-weight: bold; font-size: 18px; }
+        .count { font-weight: bold; color: crimson; font-size: 18px; }
+        .timeline {
+          margin-top: 10px;
+          width: 100%;
+          display: inline-block;
+          border-radius: 4px;
+          vertical-align: top;
+        }
+        @media screen and (min-width: 800px) { .timeline { width: 500px; } }
+        #twit-form {
+          border-bottom: 1px solid silver;
+          padding: 10px;
+          background: lightcoral;
+          overflow: hidden;
+        }
+        #img-preview { max-width: 100%; }
+        #img-label {
+          float: left;
+          cursor: pointer;
+          border-radius: 4px;
+          border: 1px solid crimson;
+          padding: 0 10px;
+          color: white;
+          font-size: 12px;
+          height: 37px;
+          line-height: 37px;
+        }
+        #img { display: none; }
+        #twit { width: 100%; min-height: 72px; }
+        #twit-btn {
+          float: right;
+          color: white;
+          background: crimson;
+          border: none;
+        }
+        .twit {
+          border: 1px solid silver;
+          border-radius: 4px;
+          padding: 10px;
+          position: relative;
+          margin-bottom: 10px;
+        }
+        .twit-author { display: inline-block; font-weight: bold; margin-right: 10px; }
+        .twit-follow, .twit-unfollow, .twit-revision, .twit-delete, .twit-edit {
+          padding: 1px 5px;
+          background: #fff;
+          border: 1px solid silver;
+          border-radius: 5px;
+          color: crimson;
+          font-size: 12px;
+          cursor: pointer;
+        }
+        .twit-img { text-align: center; }
+        .twit-img img { max-width: 75%; }
+        .error-message { color: red; font-weight: bold; }
+        #search-form { text-align: right; }
+        #join-form { padding: 10px; text-align: center; }
+        #hashtag-form { text-align: right; }
+        footer { text-align: center; }
+      </style>
+    </head>
+    <body>
+        <div class="container">
+          <div>
+            <button class="allBtn" onClick="location.href='/';">전체글</button>
+            <button class="myBtn" onClick="location.href='/myposts';">내 글</a>
+          </div>
+
+            <div class="twits">
+                <form id="hashtag-form" action="/search">
+                    <input class="tagBtn" type="text" name="hashtag" placeholder="태그 검색" value="{{hashtag}}">
+                    <button class="btn">검색</button>
+                </form>
+                {% for post in posts %}
+                <div class="twit">
+                    <input type="hidden" class="twit-id" value="{{post.id}}">
+                    <div class="twit-author">{{post.User.nick}}</div>
+                    {% if title == 'myposts' %}
+                    <button class="twit-delete">삭제하기</button>
+                    {% endif %}
+                    <div class="twit-content">{{post.content}}</div>
+                    {% if title == 'myposts' %}
+                    <form method="post" action="/post/{{post.id}}">
+                        <input type="text" name="content">
+                        <input type="submit" value="수정하기" class="twit-edit" >
+                    </form>
+                    {% endif %}
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+        document.querySelectorAll('.twit-delete').forEach(function(tag) {
+            tag.addEventListener('click', function() {
+                const postId = tag.parentNode.querySelector('.twit-id').value;
+                if (confirm(`삭제하시겠습니까?`)) {
+                    axios.delete(`/post/${postId}`)
+                    .then(() => {
+                        location.reload();
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    });
+                }
+            });
+        });
+
+    </script>
+    </body>
+</html>

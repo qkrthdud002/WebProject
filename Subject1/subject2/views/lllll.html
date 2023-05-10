@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Board</title>
+
+<!--    <link href="/css/view.css" rel="stylesheet">-->
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid deeppink;
+        }
+        tr:hover { background-color: #fff0f3; }
+        h1 {
+            padding: 0.7rem;
+            border-left: 5px solid hotpink;
+            /*background: #e3f2fd;*/
+            background: #ffcfd8;
+        }
+
+
+        .button{
+            /*background:#1AAB8A;*/
+            /*color:#fff;*/
+            background-color: #ffe9ee;
+            border:none;
+            position:relative;
+            height:60px;
+            font-size:1.6em;
+            padding:0 2em;
+            cursor:pointer;
+            transition:800ms ease all;
+            outline:none;
+        }
+        button:hover{
+            background: #ffe9ee;
+            /*color: darkblue;*/
+            outline-color: hotpink;
+        }
+        button:before,button:after{
+            content:'';
+            position:absolute;
+            top:0;
+            right:0;
+            height:5px;
+            width:0;
+            background: #353a39;
+            transition:400ms ease all;
+        }
+
+        button:hover:before,button:hover:after{
+            width:100%;
+            transition:800ms ease all;
+        }
+
+        .span {
+
+        }
+
+        .btn1 {
+            /*text-decoration-line: underline;*/
+            /*justify-content: center;*/
+            /*margin: auto;*/
+            /*display: block;*/
+            width: 60px;
+            height: 40px;
+            background-color: #fff0f3;
+            border-color: hotpink;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+        h1 {
+            text-align: center;
+        }
+
+        .writer {
+            display: flex;
+            margin: 0px auto;
+            height: 40px;
+            width: 800px;
+        }
+
+        .writerInput {
+            width: 100%;
+            height: 100%;
+        }
+
+        .writeTitle {
+            display: flex;
+            margin: 10px auto;
+            height: 40px;
+            width: 800px;
+        }
+
+        .writeInput {
+            width: 100%;
+            height: 100%;
+        }
+
+        .content {
+            display: flex;
+            margin: 10px auto;
+            height: 200px;
+            width: 800px;
+        }
+
+        .contentInput {
+            width: 100%;
+            height: 100%;
+        }
+
+        button {
+            display: flex;
+            justify-content: center;
+
+            /*background-color: #FFEAB4;*/
+
+            font-size: medium;
+            font-weight: normal;
+
+        }
+
+        input {
+            font-size: medium;
+            font-weight: bold;
+        }
+
+        input::placeholder {
+            font-size: medium;
+            font-weight: bold;
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 68px;
+            height: 38px;
+            margin: 0px auto;
+        }
+    </style>
+
+</head>
+<body>
+<h1>게시글</h1>
+
+<div class="input">
+<!--    <input type="hidden" name="id" th:value="${board.id}">-->
+    <div class="writer">
+        <label>작성자</label>
+        <span th:text="${board.memberId}"></span>
+    </div>
+
+    <div class="title">
+        <label>제목</label>
+        <span th:text="${board.title}"></span>
+    </div>
+
+    <div class="title">
+        <label>내용</label>
+        <span th:text="${board.content}"></span>
+    </div>
+
+    <div class="dateTime">
+        <label>작성일</label>
+        <span th:text="${board.createdTime}"></span>
+    </div>
+
+    <div class="views">
+        <label >조회수</label>
+        <span th:text="${board.views}"></span>
+    </div>
+
+    <div class="writeBtn">
+        <a th:href="@{/list}"><button class="btn1">목록</button></a>
+        <div th:if="${board.memberId} == ${#authentication.name}">
+            <a th:href="@{/update/{id} (id = ${board.id})}"><button class="btn1">수정</button></a>
+            <a th:href="@{/delete/{id} (id = ${board.id})}"><button class="btn1">삭제</button></a>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

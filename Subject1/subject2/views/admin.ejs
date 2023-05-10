@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>관리자 페이지</title>
+
+    <style>
+
+        * {
+            background-color: #e6e0dc;
+        }
+
+        .addMenu {
+            background-color: white;
+            width: 1000px;
+            height: 630px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0px 4px 4px 0px rgb(185, 182, 182);
+        }
+
+        #menuName, #menuPrice {
+            text-decoration: none;
+            background:none;
+            font-size: 18px;
+            margin-left: 60px;
+            width:280px;
+            height: 30px;
+            padding: 10px;
+            margin-top:20px;
+            background: none;
+            border:none;
+            border-bottom:2px solid brown;
+        }
+
+        .llogo {
+            background-color: white;
+            margin-top: 100px;
+            margin-left: 400px;
+        }
+
+        .addBtn {
+            background-color: #f3f0ef;
+            width: 140px;
+            height: 50px;
+            border-color: white;
+            font-size: medium;
+        }
+
+        .homeBtn {
+            background-color: #f3f0ef;
+            width: 140px;
+            margin-left: 10px;
+            height: 50px;
+            border-color: white;
+            margin-top: 20px;
+        }
+
+        .logoutBtn {
+            background-color: white;
+            width: 451px;
+            /* margin-left: 10px; */
+            height: 50px;
+            border-color: brown;
+            margin-top: 20px;
+        }
+
+        .homeBtn1 {
+            background-color: #f3f0ef;
+            text-decoration-line: none;
+            font-size: medium;
+        }
+
+        .indexBtn {
+            background-color: #f3f0ef;
+            /* outline-color: white; */
+            width: 140px;
+            margin-left: 10px;
+            height: 50px;
+            border-color: white;
+            margin-top: 20px;
+        }
+
+        .indexBtn1 {
+            background-color: #f3f0ef;
+            text-decoration-line: none;
+            font-size: medium;
+        }
+
+        .button {
+            background-color: white;
+        }
+
+        #menuImg {
+            background-color: white;
+        }
+
+        .buttonClass {
+            background-color: white;
+            position: absolute;
+            /* display: flex; */
+            margin-left: 300px;
+            margin-top: 10px;
+        }
+
+        .logout {
+            background-color: white;
+            text-decoration-line: none;
+            font-size: medium;
+            text-align: center;
+            /* margin: auto; */
+        }
+
+        input[type=file]::file-selector-button{
+            background-color: white;
+            width: 140px;
+            height: 30px;
+            border-color: brown;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div class="addMenu">
+        <img class="llogo" src="../img/logo.png"><br>
+
+        <div class="buttonClass">
+            <input type="text" placeholder="상품명" id="menuName"><br>
+            <input type="text" placeholder="가격" id="menuPrice"><br><br>
+            <input class="fileBtn" type="file" placeholder="사진" id="menuImg" onchange="fileSelect(event)"><br>
+            
+            <div class="button">
+                <button class="addBtn" onclick="register()">등록하기</button>
+
+                <button class="indexBtn">
+                    <a class="indexBtn1" href="/index">조회하기</a>
+                </button>
+
+                <button class="homeBtn">
+                    <a class="homeBtn1" href="/">Home</a>
+                </button>
+
+                <br>
+                <button class="logoutBtn">
+
+                    <if userId="id">
+                        <p userId="id"></p>
+                        <a href="/auth/logout"></a>
+                    </if>
+                    
+                    <a class="logout" href="/">로그아웃</a>
+             
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const menuName = document.querySelector("#menuName");
+        const menuPrice = document.querySelector("#menuPrice");
+        let file = null;
+
+        const fileSelect = (e)=>{
+            file = e.target.files[0];
+            console.log(file);
+        }
+
+        const register = ()=>{
+            const formData = new FormData()
+            formData.append("title", menuName.value)
+            formData.append("content", menuPrice.value)
+            formData.append("file", file)
+
+            axios.post("memos",formData,{headers:{
+                Authorization:localStorage.getItem("token")
+            }})
+            .then((res)=>console.log("성공"))
+            .catch((e)=>console.log(e))
+        }
+    </script>
+
+
+</body>
+</html>

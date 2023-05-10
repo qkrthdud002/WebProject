@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>관리자 로그인 페이지</title>
+
+    <style>
+        * {
+            background-color: #e6e0dc;
+        }
+
+        .login{
+            width:1040px;
+            height: 624px;
+            position: absolute;
+            left:50%;
+            top:50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0px 4px 4px 0px rgb(185, 182, 182);
+        }
+
+        .left{
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            background-color: white;
+        }
+
+        .right{
+            width: 50%;
+            height: 100%;
+            position: absolute;
+            right: 0%;
+            background-color: #fff;
+
+        }
+
+        .idbox{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+            position: absolute;
+            left: 50%;
+            top: 46%;
+            transform: translate(-50%, -50%);
+        }
+
+        .llogo{
+            margin-left: 120px;
+            margin-top: 200px;
+            background-color: #fff;
+            padding: 40px;
+        }
+
+        .id1 {
+            margin-left: 60px;
+            width:280px;
+            height: 30px;
+            padding: 10px;
+            margin-top: 190px;
+            background: none;
+            color: #2F6C24;
+            border:none;
+            border-bottom:2px solid brown;
+        }
+
+        .id{
+            margin-left: 60px;
+            width:280px;
+            height: 30px;
+            padding: 10px;
+            margin-top:20px;
+            background: none;
+            border:none;
+            border-bottom:2px solid brown;
+        }
+
+        .id:focus{
+            outline: none;
+        }
+
+
+        .lbtn{
+            margin-top: 50px;
+            margin-left: 60px;
+            width:300px;
+            height: 50px;
+            /* margin:20px; */
+            border:none;
+            background-color: #dcbead;
+            color: rgb(48, 8, 8);
+            font-size: medium;
+            font-weight: bold;
+        }
+
+        #id, #password{
+            text-decoration: none;
+            background:none;
+            font-size: 18px;
+            color: black;
+            margin-left: 60px;
+            width:280px;
+            height: 30px;
+            padding: 10px;
+            margin-top:20px;
+            background: none;
+            border:none;
+            border-bottom:2px solid brown;
+
+
+        }
+
+        #id:focus {
+            outline: none;
+        }
+
+        #password:focus {
+            outline: none;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="login">
+        <div class="left">
+            <img class="llogo" src="../img/logo.png">
+        </div>
+
+    <div class="right">
+        <div class="idbox">
+            <input type="text" placeholder="아이디" id="id">
+            <input type="text" placeholder="비밀번호" id="password">
+            <button class="lbtn" onclick="login()">로그인</button>
+    
+            <script>
+                    const id = document.querySelector('#id')
+                    const password = document.querySelector('#password')
+
+                    const login = () => {
+                        axios.post("/auth/login", {userid:id.value, password:password.value})
+                        .then((res)=>{
+                            const token = res.data.token;
+                            localStorage.setItem("token", token);
+                            location.href="/admin"
+                        })
+                        .catch((e)=>alert("로그인 실패하였습니다."))
+                    }
+            </script>
+         </div>    
+
+    </div> 
+</body>
+</html>

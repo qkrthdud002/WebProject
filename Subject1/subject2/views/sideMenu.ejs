@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>밤밤</title>
+
+    <style>
+        *{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: white;
+    
+}
+
+.menu-container{
+    padding-left: 2%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2%;
+
+    width: 80%;
+
+}
+
+.item{
+    width: 18%;
+    border: 1px solid black;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.won {
+    font-size: medium;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.item > img{
+    width: 100%;
+}
+
+.lbtn {
+    margin-top: 400px;
+    margin-bottom: 10px;
+    margin-left: 10px;  
+    width:345px;
+    height: 50px;
+    border: 1px solid black;
+    background-color: white;
+    color: black;
+}
+
+.lbtn1 {
+    text-decoration: none;
+    font-size: large;
+    font-weight: bold;
+}
+
+.lbtn1:hover:before, .lbtn1:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+.lbtn:hover:before, .lbtn:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+li {
+    float: left;
+}
+
+#current {
+    background-color: rgba(236, 198, 128, 0.067);
+}
+
+.container{
+    display: flex;
+}
+
+
+
+main{
+    width: 80%;
+}
+
+aside{
+    width: 19%;
+    /* height: 300px; */
+    margin-top: 20px;
+    border: 1px solid black;
+}
+
+li a {
+    margin-left: 130px;
+    display: block;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+li a:hover:not(.active) {
+    border-radius: 10px;
+    background-color: rgba(236, 198, 128, 0.067);
+}
+
+.imgLogo {
+    margin: auto;
+    display: block;
+}
+
+hr {
+    border: 0px;
+    height: 2px;
+    background-color: black;
+}
+    </style>
+</head>
+<body>
+
+    <img class="imgLogo" src="img/logo.png">
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/index">Coffee</a></li>
+        <li><a href="/smoothie">Smoothie</a></li>
+        <li><a href="/ade">Ade</a></li>
+        <li><a href="/tea">Tea</a></li>
+        <li><a href="/juice">Juice</a></li>
+        <li><a href="/bubble">Bubble</a></li>
+        <li><a id="current" href="/sideMenu">SideMenu</a></li>
+    </ul>
+    <hr>
+
+    <div class="container">
+        <div class="menu-container">
+        
+            <% for(let i = 0; i<rows.length; i++){ %>
+                <div class="item" onclick="addMenu('<%= rows[i].title %>','<%=rows[i].content%>')">
+                    <h2><%= rows[i].title %></h2>
+                    <img src=<%= rows[i].fileUrl %> alt="img">
+                    <p class="won"><%= rows[i].content %>원</p>
+                </div>
+            <% } %>
+
+        
+        </div>
+
+        <aside>
+            <div>
+                <h1>장바구니</h1>
+                <ul
+                class="box"
+                ></ul>
+                <br>
+                <br>
+                <br>
+                <h1>합계</h1>
+                <p id="sum"></p>
+
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <button class="lbtn">
+                    <a class="lbtn1" href="/">결제하기</a>
+                </button>
+            </div>
+        </aside>
+        <script>
+            const ul = document.querySelector(".box");
+            const addMenu = (menuName,menuPrice)=> {
+            console.log(menuName,menuPrice);
+            const li = document.createElement('li')
+            const div = document.createElement('div')
+            const h2 = document.createElement('h2')
+            const p = document.createElement('p')
+            const deleteBtn = document.createElement('button');
+            deleteBtn.addEventListener("click", (e)=>removeMenu(e));
+
+            h2.innerText = menuName;
+            p.innerText = menuPrice;
+            p.classList.add("price")
+            deleteBtn.innerText = "❌";
+
+            div.appendChild(h2);
+            div.appendChild(p);
+            div.appendChild(deleteBtn);
+
+            li.appendChild(div);
+
+            ul.appendChild(li);
+
+            const priceArr = document.getElementsByClassName("price");
+            let allPrice = 0;
+            console.log(priceArr);
+
+            for(let i= 0; i<priceArr.length; i++){
+            allPrice += Number(priceArr[i].innerHTML)
+            }
+
+            const sumTag = document.getElementById("sum");
+            sumTag.innerText=`${allPrice}`
+            
+        
+            }
+
+            const removeMenu = (e)=>{
+                const button = e.target;
+                button.parentNode.parentNode.remove();
+                
+            }
+        </script>
+    </div>
+</body>
+</html>
